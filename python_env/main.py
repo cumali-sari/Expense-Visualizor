@@ -1,5 +1,5 @@
-
 import pandas as pd
+from categorize import*
 
 df_raw = pd.read_excel("read.xlsx", header=None)
 
@@ -18,10 +18,13 @@ header_row = df_raw.apply(
 df = pd.read_excel("read.xlsx", header=header_row)
 
 df= df.dropna()
-#print(df["Tarih"])
+
+df["Kategori"]= df["Açıklama"].apply(categorize_expense)
+
+group = df.groupby("Kategori")
 
 
-print(df)
+print(group["İşlem Tutarı"].sum())
 
 
 
