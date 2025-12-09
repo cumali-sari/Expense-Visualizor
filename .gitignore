@@ -1,3 +1,4 @@
 python_env/read.xlsx
 .env
 __pycache__
+uploads
