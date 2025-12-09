@@ -1,5 +1,14 @@
 import pandas as pd
 from categorize import*
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("Agg")
+
+def same(graph):
+    plt.title(graph)
+    plt.xlabel("Category")
+    plt.ylabel("Amount")
+    plt.tight_layout()
 
 df_raw = pd.read_excel("read.xlsx", header=None)
 
@@ -22,9 +31,18 @@ df= df.dropna()
 df["Kategori"]= df["Açıklama"].apply(categorize_expense)
 
 group = df.groupby("Kategori")
+table = abs(group["İşlem Tutarı"].sum())
 
+table.to_json("../json/data.json")
 
-print(group["İşlem Tutarı"].sum())
+table.plot(kind="bar")
+same("Bar Graph")
+plt.savefig("Charts/bar.png")
+
+table.plot(kind="Pie")
+same("Pie Chart")
+plt.savefig("Charts/pie.png")
+
 
 
 
